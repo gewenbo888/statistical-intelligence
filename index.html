@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Limits of Statistical Intelligence | 统计智能的边界</title>
+
+<!-- SEO · GEO -->
+<meta name="description" content="A bilingual interactive knowledge system on large language models, probability, first principles, causality, world models, and the future of intelligence. Can predicting the next token alone produce true understanding?">
+<meta name="keywords" content="statistical intelligence, 统计智能, large language models, 大语言模型, first principles, 第一性原理, causality, 因果, world models, 世界模型, symbol grounding, 符号接地, transformer, attention, scaling laws, the nature of intelligence, AGI">
+<meta name="author" content="Gewenbo">
+<link rel="canonical" href="https://statistical-intelligence.psyverse.fun/">
+<link rel="alternate" hreflang="en" href="https://statistical-intelligence.psyverse.fun/">
+<link rel="alternate" hreflang="zh-CN" href="https://statistical-intelligence.psyverse.fun/">
+<link rel="alternate" hreflang="x-default" href="https://statistical-intelligence.psyverse.fun/">
+<meta property="og:title" content="The Limits of Statistical Intelligence · 统计智能的边界">
+<meta property="og:description" content="LLMs do not observe reality — they observe humanity's descriptions of it. Can large-scale statistical learning converge toward first principles? A bilingual interactive exploration.">
+<meta property="og:url" content="https://statistical-intelligence.psyverse.fun/">
+<meta property="og:site_name" content="Psyverse">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Limits of Statistical Intelligence · 统计智能的边界">
+<meta name="twitter:description" content="Tokens, prediction, causality, world models, and the future of intelligence — a bilingual interactive knowledge system.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#070a12">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "The Limits of Statistical Intelligence · 统计智能的边界",
+  "description": "A bilingual interactive knowledge system on large language models, probability, first principles, causality, world models, and the future of intelligence.",
+  "url": "https://statistical-intelligence.psyverse.fun/",
+  "inLanguage": ["en", "zh-CN"],
+  "author": { "@type": "Person", "name": "Gewenbo", "url": "https://psyverse.fun/" },
+  "publisher": { "@type": "Organization", "name": "Psyverse", "url": "https://psyverse.fun/" }
+}
+</script>
+<!-- /SEO · GEO -->
+
+<!-- Analytics -->
+<script src="https://analytics-dashboard-two-blue.vercel.app/tracker.js" defer></script>
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23070a12'/><circle cx='11' cy='16' r='4' fill='none' stroke='%234d9fff' stroke-width='1.6'/><circle cx='21' cy='16' r='4' fill='none' stroke='%23e0a73e' stroke-width='1.6'/></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500;700&family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --void:#070a12; --panel:#0b101b; --panel2:#101626; --panel3:#151d30;
+  --line:rgba(220,228,245,.10); --line2:rgba(220,228,245,.05);
+  --text:#e7ecf6; --dim:#8b93a7; --faint:#565d72;
+  --stat:#4d9fff; --stat2:#74c8ff; --fp:#e3aa46; --fp2:#f0c878; --synth:#9d8cff; --ok:#54d6a8;
+  --maxw:1180px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--void);color:var(--text);font-family:"Newsreader",Georgia,serif;font-size:18px;line-height:1.72;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body.lang-zh{font-family:"Noto Serif SC","Newsreader",serif}
+::selection{background:rgba(77,159,255,.32);color:#fff}
+a{color:inherit;text-decoration:none}
+canvas{display:block}
+
+.lang-en .zh-only{display:none}
+.lang-zh .en-only{display:none}
+.mono{font-family:"JetBrains Mono",monospace}
+.grotesk{font-family:"Space Grotesk",sans-serif}
+.stat-c{color:var(--stat)} .fp-c{color:var(--fp)}
+
+/* background grid */
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(120,150,210,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(120,150,210,.025) 1px,transparent 1px);
+  background-size:54px 54px;mask-image:radial-gradient(circle at 50% 30%,#000,transparent 80%)}
+
+/* nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:13px clamp(16px,4vw,38px);background:linear-gradient(180deg,rgba(7,10,18,.94),rgba(7,10,18,0));backdrop-filter:blur(9px);transition:top .3s}
+nav.scrolled{background:rgba(7,10,18,.93);border-bottom:1px solid var(--line2)}
+.brand{display:flex;align-items:center;gap:10px;font-family:"Space Grotesk",sans-serif;font-weight:600;letter-spacing:.01em;font-size:15px}
+.brand svg{width:26px;height:26px;flex:none}
+.brand .sub{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--dim);letter-spacing:.02em;font-weight:400}
+.nav-links{display:flex;gap:22px;align-items:center}
+.nav-links a{font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);transition:color .2s}
+.nav-links a:hover{color:var(--stat2)}
+.langtog{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.04em;border:1px solid var(--line);background:transparent;color:var(--text);padding:7px 13px;border-radius:7px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.langtog:hover{border-color:var(--stat);color:var(--stat2)}
+@media(max-width:1040px){.nav-links{display:none}}
+
+section{position:relative;padding:clamp(70px,10vh,128px) clamp(16px,5vw,38px);z-index:1}
+.wrap{max-width:var(--maxw);margin:0 auto;position:relative;z-index:2}
+.eyebrow{font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--stat);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.eyebrow .pt{color:var(--faint)}
+h2.title{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:clamp(28px,4.6vw,50px);line-height:1.08;letter-spacing:-.02em;margin-bottom:20px}
+body.lang-zh h2.title{font-family:"Noto Serif SC",serif;font-weight:900}
+.lede{font-size:clamp(17px,2vw,21px);color:#c4ccdd;max-width:780px;line-height:1.66}
+.lede em{color:var(--fp);font-style:italic}
+.divider{height:1px;background:var(--line);max-width:var(--maxw);margin:0 auto}
+.prose p{margin-bottom:16px;color:#c0c8da;max-width:760px}
+.prose p:last-child{margin-bottom:0}
+
+/* hero */
+#hero{min-height:100vh;display:flex;align-items:center;padding-top:92px;overflow:hidden}
+#field{position:absolute;inset:0;width:100%;height:100%;z-index:0;opacity:.9}
+#hero::after{content:"";position:absolute;inset:0;z-index:1;background:radial-gradient(125% 90% at 50% 20%,transparent 38%,rgba(7,10,18,.6) 100%);pointer-events:none}
+#hero .wrap{max-width:1040px}
+.hero-kick{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--stat);margin-bottom:24px}
+.hero-title{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:clamp(34px,6.2vw,76px);line-height:1.0;letter-spacing:-.03em;margin-bottom:8px}
+body.lang-zh .hero-title{font-family:"Noto Serif SC",serif;font-weight:900;letter-spacing:-.01em;font-size:clamp(34px,6.6vw,74px)}
+.hero-title .g{background:linear-gradient(100deg,var(--stat),var(--synth) 55%,var(--fp));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-alt{font-family:"JetBrains Mono",monospace;color:var(--dim);font-size:clamp(12px,1.6vw,15px);letter-spacing:.08em;margin:18px 0 28px;max-width:640px;line-height:1.7}
+.hero-q{font-size:clamp(19px,2.4vw,27px);max-width:680px;color:#dbe2ef;line-height:1.5;margin-bottom:16px;font-family:"Newsreader",serif}
+body.lang-zh .hero-q{font-family:"Noto Serif SC",serif}
+.hero-q b{color:#fff;font-weight:500}
+.hero-cta{display:flex;gap:13px;flex-wrap:wrap;margin-top:30px}
+.btn{font-family:"JetBrains Mono",monospace;font-size:12.5px;letter-spacing:.04em;padding:13px 22px;border-radius:9px;cursor:pointer;transition:all .25s;border:1px solid var(--line);background:transparent;color:var(--text)}
+.btn.primary{background:var(--stat);color:#04101f;border-color:var(--stat);font-weight:700}
+.btn.primary:hover{box-shadow:0 0 30px rgba(77,159,255,.4);transform:translateY(-2px)}
+.btn:hover{border-color:var(--stat);color:var(--stat2)}
+.scroll-hint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.18em;color:var(--faint);z-index:3;text-transform:uppercase}
+.scroll-hint::after{content:"";display:block;width:1px;height:30px;background:linear-gradient(var(--stat),transparent);margin:9px auto 0}
+
+/* core question */
+#core{background:var(--panel)}
+.poles{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:34px}
+@media(max-width:760px){.poles{grid-template-columns:1fr}}
+.pole{border:1px solid var(--line);border-radius:14px;padding:26px;background:var(--panel2);position:relative;overflow:hidden}
+.pole.s{border-top:2px solid var(--stat)} .pole.f{border-top:2px solid var(--fp)}
+.pole .who{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.pole.s .who{color:var(--stat)} .pole.f .who{color:var(--fp)}
+.pole .who .av{width:22px;height:22px;border-radius:50%;flex:none}
+.pole.s .who .av{background:radial-gradient(circle at 35% 30%,var(--stat2),var(--stat))}
+.pole.f .who .av{background:radial-gradient(circle at 35% 30%,var(--fp2),var(--fp))}
+.pole h3{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:21px;margin-bottom:10px}
+body.lang-zh .pole h3{font-family:"Noto Serif SC",serif}
+.pole p{font-size:15px;color:#bac2d4;line-height:1.6}
+
+/* generic lab */
+.lab{border:1px solid var(--line);border-radius:16px;background:var(--panel2);padding:clamp(20px,3vw,32px);margin-top:34px}
+.lab-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:8px}
+.lab-head h3{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:21px}
+body.lang-zh .lab-head h3{font-family:"Noto Serif SC",serif}
+.lab-head .tag{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--faint);letter-spacing:.1em;text-transform:uppercase}
+.lab p.exp{font-size:14.5px;color:#bac2d4;margin-bottom:18px;max-width:740px}
+.ctlrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:16px}
+.ctl{font-family:"JetBrains Mono",monospace;font-size:12px;padding:10px 16px;border:1px solid var(--line);border-radius:8px;cursor:pointer;background:transparent;color:var(--text);transition:all .2s}
+.ctl:hover{border-color:var(--stat);color:var(--stat2)}
+.ctl.active{background:var(--stat);color:#04101f;border-color:var(--stat);font-weight:700}
+.readout{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--dim);margin-left:auto}
+.readout b{color:var(--stat2)}
+
+/* PART 1 pipeline */
+#part1{background:var(--void)}
+.pipe{display:flex;gap:0;align-items:stretch;margin-top:8px;flex-wrap:wrap}
+.pstage{flex:1;min-width:120px;border:1px solid var(--line);border-radius:10px;padding:14px;margin:4px;cursor:pointer;transition:all .25s;text-align:center;position:relative}
+.pstage:hover{border-color:var(--stat)}
+.pstage.active{background:var(--panel3);border-color:var(--stat);box-shadow:0 0 24px rgba(77,159,255,.18)}
+.pstage .pn{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--faint);letter-spacing:.06em}
+.pstage .pl{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:15px;margin-top:4px;color:var(--dim)}
+body.lang-zh .pstage .pl{font-family:"Noto Serif SC",serif}
+.pstage.active .pl{color:var(--stat2)}
+.pstage .arr{position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--faint);font-size:14px;z-index:3}
+@media(max-width:680px){.pstage .arr{display:none}}
+.pview{border:1px solid var(--line);border-radius:12px;background:linear-gradient(180deg,#0a0f1a,#0d1422);padding:22px;margin-top:14px;min-height:200px}
+.pview h4{font-family:"Space Grotesk",sans-serif;font-size:16px;margin-bottom:6px;color:var(--stat2)}
+body.lang-zh .pview h4{font-family:"Noto Serif SC",serif}
+.pview .pd{font-size:14.5px;color:#bac2d4;margin-bottom:16px}
+.tokrow{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.tok{font-family:"JetBrains Mono",monospace;font-size:13px;padding:5px 9px;border-radius:6px;background:rgba(77,159,255,.12);border:1px solid rgba(77,159,255,.3);color:var(--stat2)}
+.vecrow{display:flex;flex-wrap:wrap;gap:8px}
+.vec{font-family:"JetBrains Mono",monospace;font-size:10.5px;padding:6px 8px;border-radius:6px;background:var(--panel3);color:var(--dim);line-height:1.3}
+#attn-canvas{width:100%;max-width:420px;height:auto;aspect-ratio:1;display:block;margin:6px auto 0}
+.predbars{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.pbar{display:flex;align-items:center;gap:10px}
+.pbar .pw{font-family:"JetBrains Mono",monospace;font-size:13px;width:110px;flex:none;text-align:right;color:#cdd5e6}
+.pbar .track{flex:1;height:20px;background:var(--panel3);border-radius:5px;overflow:hidden}
+.pbar .fill{height:100%;background:linear-gradient(90deg,var(--stat),var(--stat2));border-radius:5px;transition:width .8s cubic-bezier(.2,.8,.2,1)}
+.pbar .pp{font-family:"JetBrains Mono",monospace;font-size:12px;width:48px;flex:none;color:var(--dim)}
+.bignote{margin-top:22px;padding:18px 20px;border-left:2px solid var(--fp);background:rgba(227,170,70,.06);border-radius:0 8px 8px 0;font-size:15px;color:#dbe2ef;max-width:780px}
+.bignote b{color:var(--fp2)}
+
+/* PART 2 scaling */
+#part2{background:var(--panel)}
+.scaling{display:grid;grid-template-columns:1.1fr 1fr;gap:36px;align-items:center;margin-top:8px}
+@media(max-width:820px){.scaling{grid-template-columns:1fr}}
+#scale-canvas{width:100%;height:300px;border:1px solid var(--line);border-radius:12px;background:linear-gradient(180deg,#0a0f1a,#0d1422)}
+.scale-meta .sm{padding:13px 0;border-bottom:1px solid var(--line2)}
+.scale-meta .sm:last-child{border:none}
+.scale-meta h4{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:17px;margin-bottom:4px}
+body.lang-zh .scale-meta h4{font-family:"Noto Serif SC",serif}
+.scale-meta p{font-size:14px;color:#b3bcd0;line-height:1.55}
+.slider-wrap{margin-top:14px}
+input[type=range]{width:100%;accent-color:var(--stat);height:4px}
+.slabel{font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--dim);display:flex;justify-content:space-between;margin-top:8px}
+
+/* triad contrast cards (part3) */
+#part3{background:var(--void)}
+.triad{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:34px}
+@media(max-width:820px){.triad{grid-template-columns:1fr}}
+.tcard{border:1px solid var(--line);border-radius:14px;padding:24px;background:var(--panel2)}
+.tcard .vs{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.tcard .vs .a{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:18px}
+.tcard .vs .s{color:var(--stat)} .tcard .vs .f{color:var(--fp)}
+.tcard .vs .x{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--faint)}
+.tcard p{font-size:14.5px;color:#bac2d4;line-height:1.6}
+
+/* PART 4 loss ladder */
+#part4{background:var(--panel)}
+.ladder{margin-top:34px;display:flex;flex-direction:column;gap:2px}
+.rung{display:grid;grid-template-columns:180px 1fr 90px;gap:16px;align-items:center;padding:16px;border:1px solid var(--line);background:var(--panel2);transition:background .2s}
+.rung:hover{background:var(--panel3)}
+.rung:first-child{border-radius:12px 12px 0 0} .rung:last-child{border-radius:0 0 12px 12px}
+@media(max-width:680px){.rung{grid-template-columns:1fr;gap:8px}}
+.rung .rl{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:16px;display:flex;align-items:center;gap:8px}
+body.lang-zh .rung .rl{font-family:"Noto Serif SC",serif}
+.rung .rl .dn{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--faint)}
+.rung .rd{font-size:13.5px;color:#aab3c8;line-height:1.5}
+.rung .rbar{height:12px;border-radius:6px;background:var(--panel3);overflow:hidden;position:relative}
+.rung .rbar .rf{height:100%;background:linear-gradient(90deg,var(--fp),var(--stat));border-radius:6px}
+.rung .rpct{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--dim);text-align:right}
+
+/* PART 5 reasoning tree */
+#part5{background:var(--void)}
+.cmp2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:34px}
+@media(max-width:760px){.cmp2{grid-template-columns:1fr}}
+.cmpcol{border:1px solid var(--line);border-radius:14px;padding:24px;background:var(--panel2)}
+.cmpcol.fp{border-top:2px solid var(--fp)} .cmpcol.st{border-top:2px solid var(--stat)}
+.cmpcol h3{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:19px;margin-bottom:4px}
+body.lang-zh .cmpcol h3{font-family:"Noto Serif SC",serif}
+.cmpcol .cs{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.06em;margin-bottom:14px;text-transform:uppercase}
+.cmpcol.fp .cs{color:var(--fp)} .cmpcol.st .cs{color:var(--stat)}
+.treeflow{display:flex;flex-direction:column;gap:6px;margin:14px 0}
+.tnode{font-family:"JetBrains Mono",monospace;font-size:12.5px;padding:9px 12px;border-radius:7px;background:var(--panel3);color:#cdd5e6;position:relative}
+.tnode::after{content:"↓";display:block;text-align:center;color:var(--faint);margin-top:4px;font-size:11px}
+.tnode:last-child::after{display:none}
+.cmpcol p{font-size:14px;color:#aab3c8;line-height:1.55;margin-top:6px}
+
+/* PART 6 causal */
+#part6{background:var(--panel)}
+.causal{display:grid;grid-template-columns:1fr 380px;gap:36px;align-items:center;margin-top:8px}
+@media(max-width:880px){.causal{grid-template-columns:1fr}}
+#causal-canvas{width:100%;max-width:380px;aspect-ratio:1;margin:0 auto;border:1px solid var(--line);border-radius:12px;background:linear-gradient(180deg,#0a0f1a,#0d1422)}
+.causal-txt h4{font-family:"Space Grotesk",sans-serif;font-size:17px;margin-bottom:6px;color:var(--stat2)}
+body.lang-zh .causal-txt h4{font-family:"Noto Serif SC",serif}
+.causal-txt p{font-size:14.5px;color:#bac2d4;margin-bottom:14px;line-height:1.6}
+.modes{display:flex;gap:10px;margin-bottom:16px}
+
+/* PART 7 world models */
+#part7{background:var(--void)}
+.wm{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:34px}
+@media(max-width:820px){.wm{grid-template-columns:1fr}}
+.wmcard{border:1px solid var(--line);border-radius:14px;padding:24px;background:var(--panel2);transition:transform .25s,border-color .25s}
+.wmcard:hover{transform:translateY(-4px)}
+.wmcard.lm{border-color:rgba(77,159,255,.4)} .wmcard.pm{border-color:rgba(84,214,168,.4)} .wmcard.am{border-color:rgba(157,140,255,.4)}
+.wmcard .ic{width:42px;height:42px;margin-bottom:14px}
+.wmcard h3{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:19px;margin-bottom:3px}
+body.lang-zh .wmcard h3{font-family:"Noto Serif SC",serif}
+.wmcard .ws{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--dim);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px}
+.wmcard p{font-size:14px;color:#aeb7cb;line-height:1.55}
+
+/* PART 8 viewA/B */
+#part8{background:var(--panel)}
+.views{display:grid;grid-template-columns:1fr 60px 1fr;gap:0;margin-top:34px;align-items:stretch}
+@media(max-width:760px){.views{grid-template-columns:1fr;gap:14px}}
+.vcol{border:1px solid var(--line);border-radius:14px;padding:26px;background:var(--panel2)}
+.vcol.a{border-top:3px solid var(--stat)} .vcol.b{border-top:3px solid var(--fp)}
+.vcol .vt{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.vcol.a .vt{color:var(--stat)} .vcol.b .vt{color:var(--fp)}
+.vcol h3{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:20px;margin-bottom:14px;line-height:1.2}
+body.lang-zh .vcol h3{font-family:"Noto Serif SC",serif}
+.vcol ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+.vcol li{font-size:14.5px;color:#bac2d4;padding-left:18px;position:relative;line-height:1.5}
+.vcol li::before{content:"›";position:absolute;left:0;color:var(--faint)}
+.vsep{display:flex;align-items:center;justify-content:center;font-family:"Space Grotesk",sans-serif;font-weight:700;color:var(--faint);font-size:20px}
+@media(max-width:760px){.vsep{display:none}}
+
+/* PART 9 architectures */
+#part9{background:var(--void)}
+.arch-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:34px}
+@media(max-width:920px){.arch-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.arch-grid{grid-template-columns:1fr}}
+.arch{border:1px solid var(--line);border-radius:12px;padding:18px;background:var(--panel2);transition:border-color .2s}
+.arch:hover{border-color:var(--synth)}
+.arch .an{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--faint)}
+.arch h4{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:16px;margin:5px 0 7px}
+body.lang-zh .arch h4{font-family:"Noto Serif SC",serif}
+.arch p{font-size:13px;color:#a4adc2;line-height:1.5}
+.hybrid-note{margin-top:22px;padding:20px 22px;border:1px solid var(--synth);border-radius:12px;background:rgba(157,140,255,.06);font-size:15px;color:#dbe2ef;max-width:820px}
+.hybrid-note b{color:var(--synth)}
+
+/* PART 10 intelligence map */
+#part10{background:var(--panel)}
+.imap{display:grid;grid-template-columns:420px 1fr;gap:40px;align-items:center;margin-top:30px}
+@media(max-width:880px){.imap{grid-template-columns:1fr;gap:24px}}
+#imap-canvas{width:100%;max-width:420px;aspect-ratio:1;margin:0 auto;cursor:pointer}
+.imap-detail{border:1px solid var(--line);border-radius:14px;padding:26px;background:var(--panel2);min-height:200px}
+.imap-detail .id-tag{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.imap-detail h3{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:24px;margin-bottom:10px}
+body.lang-zh .imap-detail h3{font-family:"Noto Serif SC",serif}
+.imap-detail p{font-size:15px;color:#bac2d4;line-height:1.6}
+.lean{font-family:"JetBrains Mono",monospace;font-size:11px;margin-top:14px;padding:5px 10px;border-radius:20px;display:inline-block}
+
+/* special: symbol grounding */
+#special{background:var(--void)}
+.ground{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:34px;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+@media(max-width:760px){.ground{grid-template-columns:1fr}}
+.gside{padding:30px}
+.gside.sym{background:linear-gradient(180deg,rgba(77,159,255,.06),transparent)}
+.gside.real{background:linear-gradient(180deg,rgba(84,214,168,.06),transparent);border-left:1px solid var(--line)}
+@media(max-width:760px){.gside.real{border-left:none;border-top:1px solid var(--line)}}
+.gside h3{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:19px;margin-bottom:6px}
+body.lang-zh .gside h3{font-family:"Noto Serif SC",serif}
+.gside .gt{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:14px}
+.gside.sym .gt{color:var(--stat)} .gside.real .gt{color:var(--ok)}
+.gside p{font-size:14.5px;color:#b3bcd0;line-height:1.6;margin-bottom:12px}
+.symtok{font-family:"JetBrains Mono",monospace;font-size:13px;display:inline-block;padding:4px 9px;border-radius:6px;background:var(--panel3);color:#cdd5e6;margin:3px}
+.gap-note{margin-top:24px;text-align:center;font-family:"Newsreader",serif;font-style:italic;font-size:clamp(18px,2.4vw,24px);color:var(--fp);max-width:760px;margin-left:auto;margin-right:auto}
+body.lang-zh .gap-note{font-family:"Noto Serif SC",serif;font-style:normal}
+
+/* DEBATE */
+#debate{background:var(--panel)}
+.topic-rail{display:flex;gap:8px;flex-wrap:wrap;margin:32px 0 22px}
+.topic{font-family:"JetBrains Mono",monospace;font-size:11.5px;padding:9px 14px;border:1px solid var(--line);border-radius:8px;cursor:pointer;color:var(--dim);transition:all .2s}
+.topic:hover{border-color:var(--stat)}
+.topic.active{background:var(--panel3);border-color:var(--stat);color:var(--stat2)}
+.debate-stage{border:1px solid var(--line);border-radius:16px;background:var(--panel2);padding:clamp(18px,3vw,30px)}
+.debate-q{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:clamp(18px,2.6vw,24px);margin-bottom:22px;line-height:1.25}
+body.lang-zh .debate-q{font-family:"Noto Serif SC",serif}
+.volley{display:flex;flex-direction:column;gap:14px}
+.turn{display:flex;gap:14px;max-width:88%;opacity:0;transform:translateY(12px);transition:all .5s}
+.turn.in{opacity:1;transform:none}
+.turn.stat{align-self:flex-start}
+.turn.fp{align-self:flex-end;flex-direction:row-reverse}
+.turn .av{width:40px;height:40px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-family:"JetBrains Mono",monospace;font-weight:700;font-size:13px}
+.turn.stat .av{background:radial-gradient(circle at 35% 30%,var(--stat2),var(--stat));color:#04101f}
+.turn.fp .av{background:radial-gradient(circle at 35% 30%,var(--fp2),var(--fp));color:#241803}
+.turn .bubble{border-radius:14px;padding:15px 18px;font-size:14.5px;line-height:1.55}
+.turn.stat .bubble{background:rgba(77,159,255,.1);border:1px solid rgba(77,159,255,.25);border-top-left-radius:3px;color:#d3ddf0}
+.turn.fp .bubble{background:rgba(227,170,70,.1);border:1px solid rgba(227,170,70,.28);border-top-right-radius:3px;color:#efe2cb;text-align:right}
+.turn .nm{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:5px;opacity:.7}
+.debate-ctl{display:flex;gap:12px;align-items:center;margin-top:22px}
+
+/* final thesis */
+#thesis{background:linear-gradient(180deg,var(--panel),#05080f);text-align:center}
+#thesis .big{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:clamp(26px,4.6vw,52px);line-height:1.12;letter-spacing:-.02em;margin:8px auto 26px;max-width:18ch}
+body.lang-zh #thesis .big{font-family:"Noto Serif SC",serif;font-weight:900}
+#thesis .big .g{background:linear-gradient(100deg,var(--stat),var(--synth) 50%,var(--fp));-webkit-background-clip:text;background-clip:text;color:transparent}
+.thesis-final{font-family:"Newsreader",serif;font-style:italic;font-size:clamp(19px,2.6vw,28px);line-height:1.45;color:#dbe2ef;max-width:780px;margin:30px auto 0}
+body.lang-zh .thesis-final{font-family:"Noto Serif SC",serif;font-style:normal}
+.thesis-final .hl{color:var(--fp)}
+
+/* footer */
+footer{background:var(--panel);border-top:1px solid var(--line);padding:54px clamp(16px,5vw,38px);position:relative;z-index:1}
+.foot{max-width:var(--maxw);margin:0 auto;display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;align-items:flex-start}
+.foot .col h5{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--stat);margin-bottom:13px}
+.foot .col p,.foot .col a{font-size:14px;color:var(--dim);display:block;margin-bottom:8px}
+.foot .col a:hover{color:var(--stat2)}
+.foot .bk{max-width:400px}
+.foot .bk .t{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:18px;color:var(--text);margin-bottom:6px;line-height:1.3}
+body.lang-zh .foot .bk .t{font-family:"Noto Serif SC",serif}
+.foot .bk .meta{font-size:13.5px;color:var(--dim);line-height:1.6}
+.copy{max-width:var(--maxw);margin:38px auto 0;padding-top:22px;border-top:1px solid var(--line2);font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--faint);letter-spacing:.03em;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body class="lang-en">
+
+<nav id="nav">
+  <a class="brand" href="#hero">
+    <svg viewBox="0 0 32 32"><circle cx="12" cy="16" r="5" fill="none" stroke="#4d9fff" stroke-width="1.7"/><circle cx="20" cy="16" r="5" fill="none" stroke="#e3aa46" stroke-width="1.7"/></svg>
+    <span>Statistical Intelligence <span class="sub">/ 统计智能</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="#part1" data-k="nav.p1"></a>
+    <a href="#part4" data-k="nav.p4"></a>
+    <a href="#part6" data-k="nav.p6"></a>
+    <a href="#part10" data-k="nav.p10"></a>
+    <a href="#debate" data-k="nav.debate"></a>
+  </div>
+  <button class="langtog" id="langtog">中文</button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="field"></canvas>
+  <div class="wrap">
+    <div class="hero-kick" data-k="hero.kick"></div>
+    <h1 class="hero-title"><span data-k="hero.t1"></span> <span class="g" data-k="hero.t2"></span></h1>
+    <div class="hero-alt" data-k="hero.alt"></div>
+    <p class="hero-q" data-k="hero.q"></p>
+    <div class="hero-cta">
+      <a class="btn primary" href="#part1" data-k="hero.cta1"></a>
+      <a class="btn" href="#debate" data-k="hero.cta2"></a>
+    </div>
+  </div>
+  <div class="scroll-hint" data-k="hero.scroll"></div>
+</section>
+
+<!-- CORE QUESTION -->
+<section id="core">
+  <div class="wrap reveal">
+    <div class="eyebrow"><span class="pt">00 ·</span> <span data-k="core.eyebrow"></span></div>
+    <h2 class="title" data-k="core.title"></h2>
+    <p class="lede" data-k="core.lede"></p>
+    <div class="poles">
+      <div class="pole s"><div class="who"><span class="av"></span><span data-k="core.statwho"></span></div><h3 data-k="core.stath"></h3><p data-k="core.statp"></p></div>
+      <div class="pole f"><div class="who"><span class="av"></span><span data-k="core.fpwho"></span></div><h3 data-k="core.fph"></h3><p data-k="core.fpp"></p></div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- PART 1 -->
+<section id="part1">
+  <div class="wrap reveal">
+    <div class="eyebrow"><span class="pt">PART 01 ·</span> <span data-k="p1.eyebrow"></span></div>
+    <h2 class="title" data-k="p1.title"></h2>
+    <p class="lede" data-k="p1.lede"></p>
+    <div class="lab">
+      <div class="lab-head"><h3 data-k="p1.labtitle"></h3><span class="tag" data-k="p1.tag"></span></div>
+      <p class="exp" data-k="p1.exp"></p>
+      <div class="pipe" id="pipe"></div>
+      <div class="pview" id="pview"></div>
+    </div>
+    <div class="bignote" data-k="p1.note"></div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- PART 2 -->
+<section id="part2">
+  <div class="wrap reveal">
+    <div class="eyebrow"><span class="pt">PART 02 ·</span> <span data-k="p2.eyebrow"></span></div>
+    <h2 class="title" data-k="p2.title"></h2>
+    <p class="lede" data-k="p2.lede"></p>
+    <div class="scaling">
+      <div>
+        <canvas id="scale-canvas"></canvas>
+        <div class="slider-wrap">
+          <input type="range" id="scale-slider" min="0" max="100" value="20">
+          <div class="slabel"><span data-k="p2.scalemin"></span><span id="scale-read"></span><span data-k="p2.scalemax"></span></div>
+        </div>
+      </div>
+      <div class="scale-meta" id="scale-meta"></div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- PART 3 -->
+<section id="part3">
+  <div class="wrap reveal">
+    <div class="eyebrow"><span class="pt">PART 03 ·</span> <span data-k="p3.eyebrow"></span></div>
+    <h2 class="title" data-k="p3.title"></h2>
+    <p class="lede" data-k="p3.lede"></p>
+    <div class="triad" id="triad"></div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- PART 4 -->
+<section id="part4">
+  <div class="wrap reveal">
+    <div class="eyebrow"><span class="pt">PART 04 ·</span> <span data-k="p4.eyebrow"></span></div>
+    <h2 class="title" data-k="p4.title"></h2>
+    <p class="lede" data-k="p4.lede"></p>
+    <div class="ladder" id="ladder"></div>
+    <div class="bignote" data-k="p4.note"></div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- PART 5 -->
+<section id="part5">
+  <div class="wrap reveal">
+    <div class="eyebrow"><span class="pt">PART 05 ·</span> <span data-k="p5.eyebrow"></span></div>
+    <h2 class="title" data-k="p5.title"></h2>
+    <p class="lede" data-k="p5.lede"></p>
+    <div class="cmp2">
+      <div class="cmpcol fp">
+        <h3 data-k="p5.fph"></h3><div class="cs" data-k="p5.fpsub"></div>
+        <div class="treeflow" id="fp-tree"></div>
+        <p data-k="p5.fpnote"></p>
+      </div>
+      <div class="cmpcol st">
+        <h3 data-k="p5.sth"></h3><div class="cs" data-k="p5.stsub"></div>
+        <div class="treeflow" id="st-tree"></div>
+        <p data-k="p5.stnote"></p>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- PART 6 -->
+<section id="part6">
+  <div class="wrap reveal">
+    <div class="eyebrow"><span class="pt">PART 06 ·</span> <span data-k="p6.eyebrow"></span></div>
+    <h2 class="title" data-k="p6.title"></h2>
+    <p class="lede" data-k="p6.lede"></p>
+    <div class="causal">
+      <div class="causal-txt">
+        <div class="modes">
+          <button class="ctl active" id="mode-obs" data-k="p6.observe"></button>
+          <button class="ctl" id="mode-int" data-k="p6.intervene"></button>
+        </div>
+        <h4 id="causal-h"></h4>
+        <p id="causal-p"></p>
+        <p data-k="p6.extra"></p>
+      </div>
+      <canvas id="causal-canvas"></canvas>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- PART 7 -->
+<section id="part7">
+  <div class="wrap reveal">
+    <div class="eyebrow"><span class="pt">PART 07 ·</span> <span data-k="p7.eyebrow"></span></div>
+    <h2 class="title" data-k="p7.title"></h2>
+    <p class="lede" data-k="p7.lede"></p>
+    <div class="wm" id="wm"></div>
+    <div class="bignote" data-k="p7.note"></div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- PART 8 -->
+<section id="part8">
+  <div class="wrap reveal">
+    <div class="eyebrow"><span class="pt">PART 08 ·</span> <span data-k="p8.eyebrow"></span></div>
+    <h2 class="title" data-k="p8.title"></h2>
+    <p class="lede" data-k="p8.lede"></p>
+    <div class="views">
+      <div class="vcol a"><div class="vt" data-k="p8.aview"></div><h3 data-k="p8.ah"></h3><ul id="view-a"></ul></div>
+      <div class="vsep">VS</div>
+      <div class="vcol b"><div class="vt" data-k="p8.bview"></div><h3 data-k="p8.bh"></h3><ul id="view-b"></ul></div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- PART 9 -->
+<section id="part9">
+  <div class="wrap reveal">
+    <div class="eyebrow"><span class="pt">PART 09 ·</span> <span data-k="p9.eyebrow"></span></div>
+    <h2 class="title" data-k="p9.title"></h2>
+    <p class="lede" data-k="p9.lede"></p>
+    <div class="arch-grid" id="arch-grid"></div>
+    <div class="hybrid-note" data-k="p9.note"></div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- PART 10 -->
+<section id="part10">
+  <div class="wrap reveal">
+    <div class="eyebrow"><span class="pt">PART 10 ·</span> <span data-k="p10.eyebrow"></span></div>
+    <h2 class="title" data-k="p10.title"></h2>
+    <p class="lede" data-k="p10.lede"></p>
+    <div class="imap">
+      <canvas id="imap-canvas"></canvas>
+      <div class="imap-detail" id="imap-detail"></div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- SPECIAL -->
+<section id="special">
+  <div class="wrap reveal">
+    <div class="eyebrow"><span class="pt">SPECIAL ·</span> <span data-k="sg.eyebrow"></span></div>
+    <h2 class="title" data-k="sg.title"></h2>
+    <p class="lede" data-k="sg.lede"></p>
+    <div class="ground">
+      <div class="gside sym"><div class="gt" data-k="sg.symt"></div><h3 data-k="sg.symh"></h3><p data-k="sg.symp"></p><div id="sg-tokens"></div></div>
+      <div class="gside real"><div class="gt" data-k="sg.realt"></div><h3 data-k="sg.realh"></h3><p data-k="sg.realp"></p><p data-k="sg.realp2"></p></div>
+    </div>
+    <p class="gap-note" data-k="sg.gap"></p>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- DEBATE -->
+<section id="debate">
+  <div class="wrap reveal">
+    <div class="eyebrow"><span class="pt">⚔ ·</span> <span data-k="db.eyebrow"></span></div>
+    <h2 class="title" data-k="db.title"></h2>
+    <p class="lede" data-k="db.lede"></p>
+    <div class="topic-rail" id="topic-rail"></div>
+    <div class="debate-stage">
+      <div class="debate-q" id="debate-q"></div>
+      <div class="volley" id="volley"></div>
+      <div class="debate-ctl">
+        <button class="ctl active" id="db-next" data-k="db.next"></button>
+        <span class="readout" id="db-read"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL THESIS -->
+<section id="thesis">
+  <div class="wrap reveal">
+    <div class="eyebrow" style="justify-content:center"><span data-k="ft.eyebrow"></span></div>
+    <div class="big"><span data-k="ft.big1"></span> <span class="g" data-k="ft.big2"></span></div>
+    <p class="lede" style="margin:0 auto" data-k="ft.lede"></p>
+    <p class="thesis-final" data-k="ft.final"></p>
+  </div>
+</section>
+
+<footer>
+  <div class="foot">
+    <div class="col bk">
+      <div class="t en-only">The Limits of Statistical Intelligence</div>
+      <div class="t zh-only">统计智能的边界</div>
+      <div class="meta" data-k="foot.meta"></div>
+    </div>
+    <div class="col">
+      <h5 data-k="foot.explore"></h5>
+      <a href="#part1" data-k="nav.p1"></a>
+      <a href="#part6" data-k="nav.p6"></a>
+      <a href="#special" data-k="foot.sg"></a>
+      <a href="#debate" data-k="nav.debate"></a>
+    </div>
+    <div class="col">
+      <h5 data-k="foot.part"></h5>
+      <a href="https://psyverse.fun" target="_blank">psyverse.fun</a>
+      <a href="https://psyverse.fun/atlas.html" target="_blank" data-k="foot.atlas"></a>
+    </div>
+  </div>
+  <div class="copy">
+    <span data-k="foot.copy"></span>
+    <span>Psyverse · statistical-intelligence.psyverse.fun</span>
+  </div>
+</footer>
+
+<script>
+/* ===================== i18n CONTENT ===================== */
+const D = {
+  nav:{ p1:{en:"What is an LLM",zh:"何为大模型"}, p4:{en:"Tokens vs Reality",zh:"符号与现实"}, p6:{en:"Causality",zh:"因果"}, p10:{en:"Intelligence",zh:"智能"}, debate:{en:"The Debate",zh:"辩论"} },
+  hero:{
+    kick:{en:"An interactive knowledge system · 10 parts + a live debate",zh:"一个互动知识系统 · 十个篇章 + 实时辩论"},
+    t1:{en:"The Limits of",zh:"统计智能的"}, t2:{en:"Statistical Intelligence",zh:"边界"},
+    alt:{en:"统计智能的边界 · LARGE LANGUAGE MODELS · PROBABILITY · FIRST PRINCIPLES · THE FUTURE OF INTELLIGENCE",
+         zh:"THE LIMITS OF STATISTICAL INTELLIGENCE · 大语言模型 · 概率学习 · 第一性原理 · 智能的未来"},
+    q:{en:"Modern language models write code, translate, and reason — yet they are trained on one objective: <b>predict the next token.</b> Does predicting the next token create intelligence? Or is something still missing?",
+       zh:"现代语言模型能写代码、翻译、推理——但它们的训练目标只有一个：<b>预测下一个词元。</b>预测下一个词元，能创造智能吗？还是说，仍有某种东西缺席？"},
+    cta1:{en:"Begin the inquiry →",zh:"开始探究 →"},
+    cta2:{en:"Watch the debate ⚔",zh:"观看辩论 ⚔"},
+    scroll:{en:"Reality → Language → Text → Tokens → Model ↓",zh:"现实 → 语言 → 文本 → 词元 → 模型 ↓"}
+  },
+  core:{
+    eyebrow:{en:"The Core Question",zh:"核心问题"},
+    title:{en:"Can statistical learning alone produce understanding?",zh:"仅靠统计学习，能否产生真正的理解？"},
+    lede:{en:"Two positions run through this entire platform. Every section is a round in their argument — and you will hear from both, everywhere.",
+          zh:"两种立场贯穿整个平台。每一个篇章，都是它们之间的一个回合——你会在每一处听到双方的声音。"},
+    statwho:{en:"Statistical Intelligence Advocate",zh:"统计智能倡导者"},
+    stath:{en:"Prediction is enough.",zh:"预测，就足够了。"},
+    statp:{en:"Compress enough of the world's text and you are forced to model the processes that generated it. Understanding is what sufficiently good prediction looks like from the inside. Scale, not new principles, is the road to general intelligence.",
+           zh:"当你压缩足够多的世界文本，你就被迫建模生成这些文本的过程。所谓“理解”，不过是足够好的预测从内部看上去的样子。通往通用智能的道路是规模，而非新的原理。"},
+    fpwho:{en:"First-Principles Intelligence Advocate",zh:"第一性原理倡导者"},
+    fph:{en:"Prediction is not understanding.",zh:"预测，并非理解。"},
+    fpp:{en:"A model can perfectly predict how humans talk about gravity without grasping gravity at all. Correlation is not causation; fluency is not a mechanism. Without explicit causal models and contact with reality, statistics imitates understanding rather than achieving it.",
+         zh:"一个模型可以完美预测人类如何谈论重力，却丝毫不理解重力。相关不是因果，流畅不是机制。没有显式的因果模型、没有与现实的接触，统计只是在模仿理解，而非达成理解。"}
+  },
+  p1:{
+    eyebrow:{en:"What is a Large Language Model?",zh:"什么是大语言模型？"},
+    title:{en:"Five stages from text to a guess",zh:"从文本到一次猜测的五个阶段"},
+    lede:{en:"A GPT-style model is a function that takes text and returns a probability distribution over what comes next. Click through the pipeline to see what actually happens inside.",
+          zh:"一个 GPT 式模型，是一个把文本变成“下一个词概率分布”的函数。点击下面的流水线，看看内部究竟发生了什么。"},
+    labtitle:{en:"The Prediction Pipeline",zh:"预测流水线"},
+    tag:{en:"interactive · click a stage",zh:"互动 · 点击阶段"},
+    exp:{en:'Example prompt: "The cat sat on the ___". Follow it through each stage.',
+         zh:'示例输入：“The cat sat on the ___（猫坐在___上）”。跟随它走过每个阶段。'},
+    note:{en:"At no point does the model touch <b>truth, physics, or reality</b>. Its entire universe is the statistical structure of human-written text. Everything it &lsquo;knows&rsquo; is a pattern in data.",
+          zh:"在任何一个环节，模型都不曾触及<b>真理、物理或现实</b>。它的整个宇宙，就是人类所写文本的统计结构。它所“知道”的一切，都是数据中的模式。"}
+  },
+  p2:{
+    eyebrow:{en:"The Statistical Intelligence Hypothesis",zh:"统计智能假说"},
+    title:{en:"Maybe statistics is enough",zh:"也许，统计就足够了"},
+    lede:{en:"Why do so many researchers believe scale alone leads to intelligence? Because capability keeps rising with size — predictably, then suddenly. Drag the slider to grow the model.",
+          zh:"为何众多研究者相信仅凭规模就能通向智能？因为能力随规模持续上升——先是可预测地，然后是骤然地。拖动滑块，让模型变大。"},
+    scalemin:{en:"small",zh:"小"}, scalemax:{en:"frontier",zh:"前沿"}
+  },
+  p3:{
+    eyebrow:{en:"Why LLMs are not first-principles systems",zh:"为何说大模型不是第一性原理系统"},
+    title:{en:"Three gaps the critics point to",zh:"批评者指出的三道鸿沟"},
+    lede:{en:"LLMs do not begin from axioms, laws, or mechanisms. They begin from co-occurrence. Critics frame the gap as three contrasts.",
+          zh:"大模型并非从公理、定律或机制出发，而是从“共现”出发。批评者将这道鸿沟概括为三组对照。"}
+  },
+  p4:{
+    eyebrow:{en:"Token Relationships vs Reality",zh:"词元关系 vs 现实"},
+    title:{en:"Does a model understand gravity — or only how we talk about it?",zh:"模型理解重力——还是只理解我们如何谈论重力？"},
+    lede:{en:"Reality reaches the model through a chain of translations, and each link discards information. The model learns relationships between symbols; humans touch the world directly.",
+          zh:"现实经由一条翻译链抵达模型，而每一环都在丢弃信息。模型学到的是符号之间的关系；人类却是直接触碰世界。"},
+    note:{en:"By the time reality becomes tokens, the atoms, forces, and living cells are gone — only <b>humanity's descriptions</b> remain. The model is exquisitely fluent in the map, and has never seen the territory.",
+          zh:"当现实变成词元，原子、力与活细胞都已消失——只剩下<b>人类的描述</b>。模型对这张地图无比精通，却从未见过那片土地。"}
+  },
+  p5:{
+    eyebrow:{en:"First-Principles Thinking",zh:"第一性原理思维"},
+    title:{en:"Two ways to arrive at an answer",zh:"抵达答案的两条路径"},
+    lede:{en:"Science derives conclusions downward from causal models; gradient descent fits them upward from examples. Both can predict — but they are not the same act.",
+          zh:"科学从因果模型自上而下推导结论；梯度下降从样本自下而上拟合结论。两者都能预测——但这不是同一种行为。"},
+    fph:{en:"First Principles",zh:"第一性原理"}, fpsub:{en:"physics · math · engineering",zh:"物理 · 数学 · 工程"},
+    fpnote:{en:"From a few axioms and causal laws, a scientist can derive predictions about cases never observed — and explain why they hold.",
+            zh:"从少数公理与因果定律出发，科学家能推导出关于从未观测过的情形的预测——并解释它们为何成立。"},
+    sth:{en:"Gradient Descent",zh:"梯度下降"}, stsub:{en:"the learning of an LLM",zh:"大模型的学习方式"},
+    stnote:{en:"From billions of examples, a model tunes weights until its guesses match the data — accurate within the distribution it saw, often blind to why.",
+            zh:"从数十亿样本出发，模型不断调参，直到猜测与数据吻合——在它见过的分布内很准确，却往往不知其所以然。"}
+  },
+  p6:{
+    eyebrow:{en:"Causality",zh:"因果性"},
+    title:{en:"&lsquo;A causes B&rsquo; ≠ &lsquo;A appears near B&rsquo;",zh:"“A 导致 B” ≠ “A 常出现在 B 附近”"},
+    lede:{en:"Prediction lives on correlation. Understanding lives on causation. The difference only shows when you act on the world. Switch modes below.",
+          zh:"预测立足于相关；理解立足于因果。只有当你对世界采取行动时，这一差别才会显现。在下方切换模式。"},
+    observe:{en:"Observe",zh:"观察"}, intervene:{en:"Intervene · do(X)",zh:"干预 · do(X)"},
+    extra:{en:"Causal inference, Bayesian networks, and structural causal models give machines a grammar for intervention and counterfactuals — &lsquo;what if I had done otherwise?&rsquo; Many argue future AI cannot do without it.",
+           zh:"因果推断、贝叶斯网络与结构因果模型，赋予机器一套关于“干预”与“反事实”的语法——“如果我当初换一种做法会怎样？”许多人认为，未来的 AI 离不开它。"}
+  },
+  p7:{
+    eyebrow:{en:"World Models",zh:"世界模型"},
+    title:{en:"Does intelligence need an inner simulation of reality?",zh:"智能是否需要一个对现实的内在模拟？"},
+    lede:{en:"A world model is an internal representation of how things work, used to imagine outcomes before acting. Compare three kinds — and ask what an LLM really has.",
+          zh:"世界模型，是关于“事物如何运作”的内在表征，用以在行动前想象结果。比较三种模型——并追问：大模型真正拥有的是哪一种？"},
+    note:{en:"An LLM may contain an implicit world model — but it is reconstructed from text, never tested against the world. Whether that is a real model or a convincing shadow of one is among the deepest open questions in AI.",
+          zh:"大模型或许内含一个隐式的世界模型——但它由文本重建，从未接受世界的检验。那究竟是一个真实的模型，还是它一道逼真的影子，是 AI 中最深的未解之问之一。"}
+  },
+  p8:{
+    eyebrow:{en:"Can Statistics Lead to First Principles?",zh:"统计能通向第一性原理吗？"},
+    title:{en:"The crux of the whole question",zh:"整个问题的关键所在"},
+    lede:{en:"Here the two advocates meet head-on. Read both columns — the honest answer is that we do not yet know which is right.",
+          zh:"在此，两位倡导者正面相遇。读完两列——诚实的答案是：我们尚不知道哪一方是对的。"},
+    aview:{en:"View A · Statistical",zh:"观点 A · 统计派"},
+    ah:{en:"Enough data reveals reality.",zh:"足够的数据，终将揭示现实。"},
+    bview:{en:"View B · First-Principles",zh:"观点 B · 第一性原理派"},
+    bh:{en:"Laws need abstraction beyond correlation.",zh:"定律需要超越相关的抽象。"}
+  },
+  p9:{
+    eyebrow:{en:"The Future of AI Architectures",zh:"AI 架构的未来"},
+    title:{en:"Beyond the lone language model",zh:"超越孤立的语言模型"},
+    lede:{en:"Few researchers think the answer is &lsquo;just a bigger LLM.&rsquo; The frontier is a system of parts — each covering a weakness of the others.",
+          zh:"很少有研究者认为答案是“一个更大的大模型”。前沿是一套由多个部件组成的系统——每个部件弥补其它部件的短板。"},
+    note:{en:"The likely future is <b>hybrid</b>: a language model for fluency and priors, a world model for simulation, a causal engine for intervention, memory for persistence, and a body for grounding. Intelligence may be an architecture, not a single trick.",
+          zh:"可能的未来是<b>混合体</b>：语言模型负责流畅与先验，世界模型负责模拟，因果引擎负责干预，记忆负责持久，身体负责接地。智能也许是一种架构，而非单一的技巧。"}
+  },
+  p10:{
+    eyebrow:{en:"The Nature of Intelligence",zh:"智能的本质"},
+    title:{en:"What do we even mean by &lsquo;intelligence&rsquo;?",zh:"我们所说的“智能”，究竟是什么？"},
+    lede:{en:"The debate is partly about a word. Click each facet of the map — and notice how some are mastered by today's models, while others remain wide open.",
+          zh:"这场辩论，部分是关于一个词的争论。点击智能地图的每一个侧面——并留意：有些已被今日的模型掌握，另一些却仍敞开着。"}
+  },
+  sg:{
+    eyebrow:{en:"The Symbol Grounding Problem",zh:"符号接地问题"},
+    title:{en:"How does a symbol ever come to mean anything?",zh:"一个符号，究竟如何获得意义？"},
+    lede:{en:"A dictionary defines every word using other words, in an endless circle. So how do any of the symbols connect to the world? This is the symbol grounding problem — and it haunts every language model.",
+          zh:"一本词典用别的词来定义每一个词，循环不息。那么，这些符号究竟如何与世界相连？这就是符号接地问题——它萦绕在每一个语言模型之上。"},
+    symt:{en:"Inside the model",zh:"模型内部"}, symh:{en:"Symbols defined by symbols",zh:"以符号定义符号"},
+    symp:{en:"To the model, &lsquo;apple&rsquo; is a vector near &lsquo;fruit&rsquo;, &lsquo;red&rsquo;, and &lsquo;tree&rsquo;. Its meaning is exhausted by its relations to other tokens — a vast web of words pointing only at one another.",
+          zh:"对模型而言，“苹果”是一个邻近“水果”“红色”“树”的向量。它的意义，完全由它与其它词元的关系构成——一张庞大的词语之网，只彼此指向。"},
+    realt:{en:"Inside a body",zh:"身体内部"}, realh:{en:"Symbols anchored to sensation",zh:"以感受锚定符号"},
+    realp:{en:"For a human, &lsquo;apple&rsquo; is tied to weight in the hand, crunch, sweetness, the memory of an orchard. The word is grounded in non-verbal experience that no amount of text contains.",
+           zh:"对人类而言，“苹果”系于手中的重量、咬下的脆响、甜味、果园的记忆。这个词，接地于任何文本都不包含的非语言经验。"},
+    realp2:{en:"This is why many argue meaning may require embodiment — a sensor-rich loop between an agent and a world — not just more tokens.",
+            zh:"正因如此，许多人主张：意义或许需要具身——一个智能体与世界之间富含感官的回路——而不仅仅是更多的词元。"},
+    gap:{en:"Can tokens ever acquire meaning without a body to ground them? On this, reasonable researchers still profoundly disagree.",
+         zh:"没有一具身体为之接地，词元能否获得意义？在这个问题上，严肃的研究者至今仍深刻地分歧着。"}
+  },
+  db:{
+    eyebrow:{en:"The AI Debate System",zh:"AI 辩论系统"},
+    title:{en:"Two minds, every topic",zh:"两种心智，逐题交锋"},
+    lede:{en:"Pick a topic and let the Statistical Intelligence Advocate and the First-Principles Intelligence Advocate argue it out, round by round.",
+          zh:"选择一个议题，让“统计智能倡导者”与“第一性原理倡导者”逐回合地展开辩论。"},
+    next:{en:"Next exchange →",zh:"下一回合 →"}
+  },
+  ft:{
+    eyebrow:{en:"The Final Thesis",zh:"最终命题"},
+    big1:{en:"They learn relationships between tokens —",zh:"它们学到的是词元之间的关系——"},
+    big2:{en:"not between atoms, gravity, cells, or galaxies.",zh:"而非原子、重力、细胞或星系之间的关系。"},
+    lede:{en:"Large language models may be the most powerful statistical learning systems ever built. But humanity is still exploring whether prediction alone is sufficient for understanding, causality, scientific reasoning — and ultimately, general intelligence.",
+          zh:"大语言模型或许是人类有史以来最强大的统计学习系统。但人类仍在探索：仅凭预测，是否足以支撑理解、因果、科学推理——以及最终的通用智能。"},
+    final:{en:"Large language models do not observe reality directly. They observe humanity's descriptions of reality. <span class='hl'>The open question is whether sufficiently large-scale statistical learning can eventually converge toward first principles.</span>",
+           zh:"大语言模型并不直接观察现实。它们观察的，是人类对现实的描述。<span class='hl'>悬而未决的问题是：足够大规模的统计学习，能否最终收敛到第一性原理。</span>"}
+  },
+  foot:{
+    meta:{en:"An independent, bilingual interactive knowledge system on the science and philosophy of machine intelligence. Original work — not affiliated with any lab or company named within.",
+          zh:"一个独立的双语互动知识系统，探讨机器智能的科学与哲学。原创作品——与文中提及的任何实验室或公司均无关联。"},
+    explore:{en:"Explore",zh:"探索"}, sg:{en:"Symbol Grounding",zh:"符号接地"}, part:{en:"Part of",zh:"所属"}, atlas:{en:"The Atlas",zh:"星图总览"},
+    copy:{en:"© 2026 Psyverse — an inquiry, not a verdict.",zh:"© 2026 Psyverse — 一场探究，而非定论。"}
+  }
+};
+
+/* ===== PART 1 pipeline data ===== */
+const PIPE = [
+  {pn:"01",l:{en:"Text",zh:"文本"},render:(L)=>`<h4>${tx({en:"Raw text",zh:"原始文本"})}</h4><div class="pd">${tx({en:"The model receives a string of characters — nothing more. No meaning is attached yet.",zh:"模型收到的，只是一串字符——别无其它。此刻尚无任何意义附着其上。"})}</div><div style="font-family:'JetBrains Mono',monospace;font-size:18px;color:#dbe2ef;padding:12px 16px;background:var(--panel3);border-radius:8px;display:inline-block">"The cat sat on the ___"</div>`},
+  {pn:"02",l:{en:"Tokens",zh:"词元"},render:(L)=>`<h4>${tx({en:"Tokenization",zh:"分词（词元化）"})}</h4><div class="pd">${tx({en:"Text is chopped into tokens — sub-word fragments from a fixed vocabulary. Each becomes an integer ID.",zh:"文本被切成词元——来自固定词表的子词片段。每个词元对应一个整数 ID。"})}</div><div class="tokrow">${["The","Ġcat","Ġsat","Ġon","Ġthe"].map((t,i)=>`<span class="tok">${t}<span style="color:var(--faint)"> · ${[464,3797,3332,319,262][i]}</span></span>`).join("")}</div>`},
+  {pn:"03",l:{en:"Vectors",zh:"向量"},render:(L)=>`<h4>${tx({en:"Embeddings",zh:"嵌入向量"})}</h4><div class="pd">${tx({en:"Each token ID becomes a high-dimensional vector — a point in a learned space where related meanings sit nearby.",zh:"每个词元 ID 变成一个高维向量——学习得到的空间中的一个点，意义相关者彼此邻近。"})}</div><div class="vecrow">${["The","cat","sat","on","the"].map(t=>`<span class="vec">${t}<br>[${Array.from({length:4},()=>(Math.random()*2-1).toFixed(2)).join(", ")}, …]</span>`).join("")}</div>`},
+  {pn:"04",l:{en:"Attention",zh:"注意力"},render:(L)=>`<h4>${tx({en:"Self-attention",zh:"自注意力"})}</h4><div class="pd">${tx({en:"Each token looks at every other token and weighs how much it matters. This is the transformer's core operation — context, built as a weighted blend.",zh:"每个词元审视其它所有词元，衡量彼此的重要程度。这是 Transformer 的核心操作——语境，由加权融合而成。"})}</div><canvas id="attn-canvas"></canvas>`},
+  {pn:"05",l:{en:"Prediction",zh:"预测"},render:(L)=>`<h4>${tx({en:"Next-token distribution",zh:"下一词元的概率分布"})}</h4><div class="pd">${tx({en:"The model outputs a probability for every token in its vocabulary. It picks (or samples) the most likely. That is the entire act of &lsquo;thinking&rsquo;.",zh:"模型为词表中的每一个词元输出一个概率，然后选取（或采样）最可能者。这，就是“思考”的全部。"})}</div><div class="predbars">${[["mat",0.41],["floor",0.22],["sofa",0.14],["roof",0.07],["moon",0.015]].map(([w,p])=>`<div class="pbar"><span class="pw">"${w}"</span><div class="track"><div class="fill" style="width:${p*100}%"></div></div><span class="pp">${(p*100).toFixed(1)}%</span></div>`).join("")}</div>`}
+];
+
+/* PART 2 scaling meta */
+const SCALEMETA=[
+  {h:{en:"Scaling laws",zh:"缩放定律"},p:{en:"Loss falls as a smooth power law in model size, data, and compute — performance you can forecast before you train.",zh:"损失随模型规模、数据与算力，按平滑的幂律下降——这是一种在训练前就能预测的性能。"}},
+  {h:{en:"Emergence",zh:"涌现"},p:{en:"Some abilities are near-zero, then appear abruptly past a scale threshold — arithmetic, translation, chain-of-thought.",zh:"某些能力一度近乎为零，越过某个规模阈值后骤然出现——算术、翻译、思维链。"}},
+  {h:{en:"In-context learning",zh:"上下文学习"},p:{en:"Large models learn new tasks from a few examples in the prompt — without any weight update at all.",zh:"大模型能从提示中的少数示例学会新任务——完全不更新任何权重。"}},
+  {h:{en:"Self-supervision",zh:"自监督"},p:{en:"Prediction needs no labels. The whole internet becomes training data, and the objective writes its own answers.",zh:"预测无需标注。整个互联网都成了训练数据，目标函数自己生成答案。"}}
+];
+
+/* PART 3 triad */
+const TRIAD=[
+  {s:{en:"Correlation",zh:"相关"},f:{en:"Causation",zh:"因果"},p:{en:"A model sees that two things move together. It rarely knows which one moves the other — or whether a hidden third thing moves both.",zh:"模型看到两件事一同变化，却很少知道是谁推动了谁——或是否有隐藏的第三者同时推动二者。"}},
+  {s:{en:"Pattern",zh:"模式"},f:{en:"Mechanism",zh:"机制"},p:{en:"It captures the shape of the data without the machinery underneath — like memorizing tides without knowing the moon.",zh:"它捕捉数据的形状，却没有其下的运作机制——如同记住潮汐，却不知有月亮。"}},
+  {s:{en:"Prediction",zh:"预测"},f:{en:"Understanding",zh:"理解"},p:{en:"Guessing the next word well is not the same as knowing why the world produces those words. Fluency can hide a void.",zh:"善于猜出下一个词，不等于懂得世界为何产出这些词。流畅，可以掩盖一片空洞。"}}
+];
+
+/* PART 4 ladder */
+const LADDER=[
+  {dn:"L0",l:{en:"Reality",zh:"现实"},d:{en:"Atoms, forces, fields, cells, galaxies — the world itself.",zh:"原子、力、场、细胞、星系——世界本身。"},pct:100},
+  {dn:"L1",l:{en:"Human Language",zh:"人类语言"},d:{en:"We compress experience into words — already a lossy abstraction.",zh:"我们把经验压缩成语言——本身已是一种有损的抽象。"},pct:42},
+  {dn:"L2",l:{en:"Internet Text",zh:"互联网文本"},d:{en:"Only the fraction of language that got written down, and survives online.",zh:"只是被写下、并留存于网络的那一小部分语言。"},pct:24},
+  {dn:"L3",l:{en:"Tokens",zh:"词元"},d:{en:"Text sliced into vocabulary fragments — structure without sensation.",zh:"被切成词表片段的文本——有结构，无感受。"},pct:14},
+  {dn:"L4",l:{en:"The Model",zh:"模型"},d:{en:"Statistical relationships among tokens. The world is now a web of symbols.",zh:"词元之间的统计关系。世界至此成了一张符号之网。"},pct:9}
+];
+
+/* PART 5 trees */
+const FP_TREE={en:["Observation & axioms","Causal model / law","Mathematical derivation","Prediction for unseen cases","Explanation of why"],zh:["观察与公理","因果模型 / 定律","数学推导","对未见情形的预测","对“为何”的解释"]};
+const ST_TREE={en:["Billions of examples","Loss = prediction error","Backpropagation","Weights nudged downhill","Accurate guess (why? unknown)"],zh:["数十亿样本","损失 = 预测误差","反向传播","权重沿坡下调","准确的猜测（为何？未知）"]};
+
+/* PART 6 causal nodes */
+const CAUSAL={
+  nodes:[{id:"rain",l:{en:"Rain",zh:"下雨"},x:.5,y:.16},{id:"spr",l:{en:"Sprinkler",zh:"喷水器"},x:.16,y:.5},{id:"wet",l:{en:"Wet grass",zh:"草地湿"},x:.5,y:.56},{id:"slip",l:{en:"Slippery",zh:"地面滑"},x:.5,y:.9}],
+  edges:[["rain","wet"],["spr","wet"],["wet","slip"]],
+  obs:{h:{en:"Observation: wet grass ↔ slippery",zh:"观察：草地湿 ↔ 地面滑"},p:{en:"From data alone, &lsquo;wet&rsquo; and &lsquo;slippery&rsquo; rise together. The model can predict one from the other — and could just as wrongly &lsquo;predict&rsquo; rain from a running sprinkler, because they share the same effect.",zh:"仅凭数据，“湿”与“滑”一同升降。模型能由此及彼地预测——也会同样错误地由“喷水器开着”去“预测下雨”，因为它们共享同一个结果。"}},
+  int:{h:{en:"Intervention: do(Sprinkler = on)",zh:"干预：do(喷水器 = 开)"},p:{en:"Now we act: we force the sprinkler on. The grass gets wet and slippery — but the rain node does not change. Intervention cuts the incoming arrows and exposes true causal direction. Pure correlation cannot do this.",zh:"现在我们采取行动：强制打开喷水器。草地变湿变滑——但“下雨”节点不受影响。干预切断了指向它的箭头，揭示了真正的因果方向。纯相关做不到这一点。"}}
+};
+
+/* PART 7 world models */
+const WM=[
+  {cls:"lm",ic:"lm",h:{en:"Language Model",zh:"语言模型"},s:{en:"models text",zh:"建模文本"},p:{en:"Predicts the next symbol. Its &lsquo;world&rsquo; is the distribution of human writing. Brilliant at what has been said; uncertain about what is.",zh:"预测下一个符号。它的“世界”是人类写作的分布。对“被说过的”了如指掌，对“是什么”却心里没底。"}},
+  {cls:"pm",ic:"pm",h:{en:"Physics Model",zh:"物理模型"},s:{en:"models dynamics",zh:"建模动力学"},p:{en:"Simulates how states evolve under laws. Give it a configuration and it rolls reality forward — gravity, fluids, collisions — whether or not anyone described them.",zh:"在定律之下模拟状态如何演化。给它一个初始构型，它便把现实向前推演——重力、流体、碰撞——无论是否有人描述过它们。"}},
+  {cls:"am",ic:"am",h:{en:"Agent Model",zh:"智能体模型"},s:{en:"models action",zh:"建模行动"},p:{en:"Plans toward goals by imagining the consequences of its own actions. It needs an internal world to ask &lsquo;what happens if I do this?&rsquo; before doing it.",zh:"通过想象自身行动的后果，朝目标做规划。它需要一个内在世界，以便在行动前自问“如果我这么做会怎样？”。"}}
+];
+
+/* PART 8 views */
+const VIEWA={en:["A perfect predictor of text must internally model the processes that wrote it — including physics and causality.","History shows scale unlocking abilities no one explicitly designed.","Causal structure is itself a statistical regularity; enough data exposes it.","The brain, too, is &lsquo;just&rsquo; a prediction machine shaped by data."],
+  zh:["一个完美的文本预测者，必然在内部建模生成文本的过程——包括物理与因果。","历史一再表明，规模会解锁无人显式设计的能力。","因果结构本身就是一种统计规律；足够的数据会让它显形。","人脑，也不过是一台被数据塑造的预测机器。"]};
+const VIEWB={en:["Many causal structures produce identical data; correlation alone cannot tell them apart.","Without intervention, a system can never learn what causes what.","Laws are compressions that require abstraction, not just interpolation.","Text omits most of reality — what was never written can never be inferred from it."],
+  zh:["许多不同的因果结构会产生完全相同的数据；仅凭相关无法区分它们。","没有干预，系统永远无法知道什么导致了什么。","定律是需要抽象的压缩，而不仅仅是插值。","文本省略了现实的大部分——从未被写下的，永远无法从中推断。"]};
+
+/* PART 9 architectures */
+const ARCH=[
+  {n:"01",h:{en:"Language Models",zh:"语言模型"},p:{en:"Fluency, priors, and a vast compressed memory of human knowledge.",zh:"流畅、先验，以及对人类知识的庞大压缩记忆。"}},
+  {n:"02",h:{en:"World Models",zh:"世界模型"},p:{en:"Internal simulators that roll reality forward to imagine outcomes.",zh:"内在的模拟器，把现实向前推演以想象结果。"}},
+  {n:"03",h:{en:"Causal Engines",zh:"因果引擎"},p:{en:"Machinery for intervention and counterfactual reasoning.",zh:"用于干预与反事实推理的机制。"}},
+  {n:"04",h:{en:"Memory Systems",zh:"记忆系统"},p:{en:"Persistent, retrievable state beyond a context window.",zh:"超越上下文窗口的、可检索的持久状态。"}},
+  {n:"05",h:{en:"Reasoning Systems",zh:"推理系统"},p:{en:"Explicit multi-step search, planning, and verification.",zh:"显式的多步搜索、规划与验证。"}},
+  {n:"06",h:{en:"Embodied Agents",zh:"具身智能体"},p:{en:"Bodies and sensors that ground symbols in a real loop with the world.",zh:"身体与传感器，在与世界的真实回路中为符号接地。"}},
+  {n:"07",h:{en:"Scientific AI",zh:"科学 AI"},p:{en:"Systems that propose hypotheses, run experiments, and revise theory.",zh:"能提出假设、开展实验、修正理论的系统。"}},
+  {n:"08",h:{en:"Hybrids",zh:"混合体"},p:{en:"All of the above, composed — the most likely shape of the future.",zh:"以上全部的组合——最可能的未来形态。"}}
+];
+
+/* PART 10 intelligence map facets */
+const IMAP=[
+  {l:{en:"Pattern matching",zh:"模式匹配"},lean:"stat",d:{en:"Recognizing recurring structure in data. The bedrock skill of every neural network — and arguably of perception itself.",zh:"识别数据中反复出现的结构。这是每一个神经网络的基石技能——也可以说是知觉本身的基石。"}},
+  {l:{en:"Prediction",zh:"预测"},lean:"stat",d:{en:"Anticipating what comes next. The training objective of LLMs, and a deep theory of what brains do.",zh:"预判接下来会发生什么。这是大模型的训练目标，也是关于大脑运作的一种深刻理论。"}},
+  {l:{en:"Compression",zh:"压缩"},lean:"stat",d:{en:"Finding the shortest description of data. Many argue understanding just is excellent compression.",zh:"为数据找到最短的描述。许多人主张，理解，恰恰就是出色的压缩。"}},
+  {l:{en:"World modeling",zh:"世界建模"},lean:"both",d:{en:"Maintaining an inner representation of how reality works, to simulate and plan. Contested territory between the two camps.",zh:"维持一个关于现实如何运作的内在表征，用以模拟与规划。两大阵营在此激烈争夺。"}},
+  {l:{en:"Goal optimization",zh:"目标优化"},lean:"both",d:{en:"Acting to maximize an objective over time. Where prediction becomes agency — and where alignment gets hard.",zh:"为在长期内最大化某个目标而行动。在此，预测变成了能动性——对齐也在此变得困难。"}},
+  {l:{en:"Causal reasoning",zh:"因果推理"},lean:"fp",d:{en:"Knowing what produces what, and what would happen under intervention. The skill critics say statistics cannot reach alone.",zh:"懂得什么产生什么、干预之下会发生什么。批评者认为，这正是统计单凭自身无法企及的能力。"}},
+  {l:{en:"Scientific discovery",zh:"科学发现"},lean:"fp",d:{en:"Inventing new concepts and laws that go beyond the training data. The high-water mark of first-principles thought.",zh:"发明超越训练数据的新概念与新定律。这是第一性原理思维的最高标志。"}},
+  {l:{en:"Self-awareness",zh:"自我意识"},lean:"fp",d:{en:"Modeling oneself as an agent in the world. The most mysterious facet — and perhaps not required for intelligence at all.",zh:"把自身建模为世界中的一个能动者。最神秘的一个侧面——也许，智能根本不需要它。"}}
+];
+
+/* SG tokens */
+const SGTOK=["apple","fruit","red","sweet","tree","orchard","crisp","🍎?"];
+
+/* DEBATE */
+const DEBATE=[
+  {topic:{en:"Is prediction understanding?",zh:"预测就是理解吗？"},
+   q:{en:"Does predicting the next token amount to understanding?",zh:"预测下一个词元，等同于理解吗？"},
+   rounds:[
+    {s:{en:"To predict text reliably, I must implicitly capture the structures that generate it. Good enough prediction is indistinguishable from understanding.",zh:"要可靠地预测文本，我必须隐式地捕捉生成它的结构。足够好的预测，与理解无从区分。"},
+     f:{en:"Indistinguishable from the outside. A student can predict exam answers by memorizing past papers and understand nothing. Behavior is not the same as comprehension.",zh:"那只是从外部看无从区分。学生靠背历年真题就能预测答案，却毫无理解。行为，不等于领会。"}},
+    {s:{en:"But there aren't enough past papers to cover novel questions. Generalization to the unseen is exactly what forces real structure to form inside the weights.",zh:"可历年真题不足以覆盖新题。对未见情形的泛化，恰恰逼迫真实的结构在权重中形成。"},
+     f:{en:"Generalization within the data manifold, yes. Step off it — ask a genuinely new mechanism — and prediction degrades to confident guessing. That's the tell.",zh:"是在数据流形之内的泛化。一旦走出流形——问一个真正全新的机制——预测便退化为自信的猜测。这就是破绽。"}}
+   ]},
+  {topic:{en:"Tokens vs reality",zh:"词元 vs 现实"},
+   q:{en:"Can a model that only sees text understand the physical world?",zh:"一个只见文本的模型，能理解物理世界吗？"},
+   rounds:[
+    {s:{en:"Text is a high-fidelity projection of reality. Physics, chemistry, and human experience are all encoded in how we write. Decode the text, recover the world.",zh:"文本是现实的高保真投影。物理、化学、人类经验，全都编码在我们的写作之中。解码文本，便能还原世界。"},
+     f:{en:"A projection loses dimensions. No text conveys the felt weight of a stone or the taste of salt. You can't recover what was never written down.",zh:"投影会丢失维度。没有任何文本能传达一块石头压手的重量、或盐的味道。从未被写下的，无法被还原。"}},
+    {s:{en:"Yet blind physicists do real physics, and I learn vision-language links from captions. Missing one channel doesn't mean missing the concept.",zh:"可盲人物理学家照样做真物理，而我能从图注中学到视觉与语言的关联。缺一个通道，不等于缺了概念。"},
+     f:{en:"The blind physicist still lives in a body, gravity pulling on every step. That embodied prior is the grounding you lack — concepts borrowed, never earned.",zh:"盲人物理学家仍活在一具身体里，重力牵引着每一步。那种具身的先验，正是你所缺的接地——概念是借来的，从未亲历挣得。"}}
+   ]},
+  {topic:{en:"Does scale solve it?",zh:"规模能解决吗？"},
+   q:{en:"Will a large enough model converge to first principles on its own?",zh:"足够大的模型，会自行收敛到第一性原理吗？"},
+   rounds:[
+    {s:{en:"Every year, abilities people swore needed special architecture just emerged from scale. The null hypothesis should be: scale keeps winning.",zh:"年复一年，人们咬定需要特殊架构的能力，仅凭规模就涌现了出来。零假设应当是：规模会继续取胜。"},
+     f:{en:"Scale climbs the curve it's on. Causal direction, true novelty, and counterfactuals are off that curve — no amount of interpolation reaches them.",zh:"规模只是在它所处的那条曲线上攀升。因果方向、真正的新颖、反事实，都不在这条曲线上——再多的插值也够不着。"}},
+    {s:{en:"Then we add tools, interventions, and self-play — still statistical learning, just richer data. The boundary you draw keeps moving.",zh:"那我们就加上工具、干预与自我博弈——这仍是统计学习，只是数据更丰富。你划下的界线，一直在退。"},
+     f:{en:"Add intervention and you've conceded my point: you needed something beyond passive prediction. The hybrid future is first principles sneaking back in.",zh:"一旦加入干预，你便已承认了我的论点：你需要某种超越被动预测的东西。混合的未来，正是第一性原理悄然回归。"}}
+   ]},
+  {topic:{en:"What is intelligence?",zh:"何为智能？"},
+   q:{en:"Is intelligence ultimately statistical, or something more?",zh:"智能归根结底是统计的，还是更多？"},
+   rounds:[
+    {s:{en:"Intelligence is compression plus prediction under uncertainty. That's it. It looks mysterious only because we run on wet neurons instead of silicon.",zh:"智能就是不确定性下的压缩加预测。仅此而已。它之所以显得神秘，只因我们跑在湿润的神经元上，而非硅片上。"},
+     f:{en:"That definition quietly omits invention — the leap to concepts not present in any data. Newton didn't interpolate gravity; he posited it.",zh:"这个定义悄悄略去了“发明”——跃向任何数据中都不存在的概念。牛顿不是插值出了重力，他是假设出了重力。"}},
+    {s:{en:"Newton interpolated over centuries of recorded observation — Kepler, Galileo, the tides. Genius is just a very good prior meeting good data.",zh:"牛顿是在几个世纪积累的观测记录之上插值——开普勒、伽利略、潮汐。天才，不过是极好的先验遇上了好数据。"},
+     f:{en:"And yet the prior had to be invented. That act — choosing the right abstraction from infinite wrong ones — is the part we still cannot reduce to statistics.",zh:"然而那个先验，仍须被发明出来。这一行为——从无穷多错误的抽象中选出对的那个——正是我们至今无法归约为统计的部分。"}}
+   ]}
+];
+
+/* ===================== RENDER ===================== */
+let lang='en';
+const tx=(o)=>o[lang];
+function renderStatic(){
+  document.querySelectorAll('[data-k]').forEach(el=>{
+    const p=el.getAttribute('data-k').split('.');let v=D;p.forEach(k=>v=v&&v[k]);
+    if(v&&v[lang]!==undefined) el.innerHTML=v[lang];
+  });
+}
+
+/* PART 1 */
+let pipeA=0;
+function renderPipe(){
+  const pipe=document.getElementById('pipe');
+  pipe.innerHTML=PIPE.map((s,i)=>`<div class="pstage ${i===pipeA?'active':''}" data-i="${i}"><div class="pn">${s.pn}</div><div class="pl">${tx(s.l)}</div>${i<PIPE.length-1?'<span class="arr">→</span>':''}</div>`).join('');
+  pipe.querySelectorAll('.pstage').forEach(x=>x.onclick=()=>{pipeA=+x.dataset.i;renderPipe();});
+  document.getElementById('pview').innerHTML=PIPE[pipeA].render(lang);
+  if(pipeA===3) drawAttn();
+}
+function drawAttn(){
+  const cv=document.getElementById('attn-canvas');if(!cv)return;
+  const r=devicePixelRatio||1;const S=cv.width=cv.offsetWidth*r;cv.height=S;const x=cv.getContext('2d');
+  const toks=["The","cat","sat","on","the"];const n=toks.length;const pad=46*r;const cell=(S-pad*1.2)/n;
+  // weights (lower triangular causal attention)
+  const W=[[1,0,0,0,0],[.3,.7,0,0,0],[.15,.55,.3,0,0],[.1,.2,.45,.25,0],[.2,.15,.2,.15,.3]];
+  x.clearRect(0,0,S,S);
+  x.font=`${10*r}px "JetBrains Mono", monospace`;x.fillStyle="#8b93a7";
+  for(let i=0;i<n;i++){x.textAlign="right";x.textBaseline="middle";x.fillText(toks[i],pad-6*r,pad+cell*(i+.5));
+    x.save();x.translate(pad+cell*(i+.5),pad-8*r);x.rotate(-Math.PI/4);x.textAlign="left";x.fillText(toks[i],0,0);x.restore();}
+  for(let i=0;i<n;i++)for(let j=0;j<n;j++){const w=W[i][j];
+    x.fillStyle=`rgba(77,159,255,${w})`;x.fillRect(pad+cell*j+1,pad+cell*i+1,cell-2,cell-2);
+    if(w>0){x.fillStyle=w>.4?"#04101f":"rgba(220,228,245,.5)";x.textAlign="center";x.textBaseline="middle";x.font=`${9*r}px "JetBrains Mono", monospace`;x.fillText(w.toFixed(1),pad+cell*(j+.5),pad+cell*(i+.5));}}
+}
+
+/* PART 2 scaling */
+function renderScaleMeta(){document.getElementById('scale-meta').innerHTML=SCALEMETA.map(s=>`<div class="sm"><h4>${tx(s.h)}</h4><p>${tx(s.p)}</p></div>`).join('');}
+function drawScale(){
+  const cv=document.getElementById('scale-canvas');if(!cv)return;
+  const r=devicePixelRatio||1;const W=cv.width=cv.offsetWidth*r;const H=cv.height=300*r;const x=cv.getContext('2d');
+  const v=+document.getElementById('scale-slider').value/100;
+  x.clearRect(0,0,W,H);const padL=44*r,padB=36*r,padT=20*r,padR=18*r;const cw=W-padL-padR,ch=H-padT-padB;
+  x.strokeStyle="rgba(220,228,245,.08)";x.lineWidth=r;
+  for(let i=0;i<=4;i++){const y=padT+ch*i/4;x.beginPath();x.moveTo(padL,y);x.lineTo(W-padR,y);x.stroke();}
+  // loss curve = power law decreasing
+  x.beginPath();
+  for(let i=0;i<=120;i++){const t=i/120;const px=padL+cw*t;const loss=0.08+0.9*Math.pow(1-t,1.6);const py=padT+ch*(loss);if(i===0)x.moveTo(px,py);else x.lineTo(px,py);}
+  x.strokeStyle="rgba(116,200,255,.4)";x.lineWidth=2*r;x.stroke();
+  // filled portion up to v
+  x.beginPath();
+  for(let i=0;i<=120*v;i++){const t=i/120;const px=padL+cw*t;const loss=0.08+0.9*Math.pow(1-t,1.6);const py=padT+ch*(loss);if(i===0)x.moveTo(px,py);else x.lineTo(px,py);}
+  x.strokeStyle="var(--stat)";x.strokeStyle="#4d9fff";x.lineWidth=3.4*r;x.shadowColor="#4d9fff";x.shadowBlur=10*r;x.stroke();x.shadowBlur=0;
+  // emergence threshold marker
+  const et=0.62;const ex=padL+cw*et;
+  x.strokeStyle="rgba(227,170,70,.5)";x.setLineDash([4*r,4*r]);x.beginPath();x.moveTo(ex,padT);x.lineTo(ex,padT+ch);x.stroke();x.setLineDash([]);
+  x.fillStyle="#e3aa46";x.font=`${10*r}px "JetBrains Mono", monospace`;x.textAlign="center";
+  x.fillText(tx({en:"emergence",zh:"涌现"}),ex,padT+12*r);
+  // current dot
+  const ct=v;const closs=0.08+0.9*Math.pow(1-ct,1.6);const cx=padL+cw*ct,cy=padT+ch*closs;
+  x.beginPath();x.arc(cx,cy,5*r,0,7);x.fillStyle="#fff";x.fill();
+  // axes labels
+  x.fillStyle="rgba(139,147,167,.8)";x.textAlign="left";x.fillText(tx({en:"loss ↑",zh:"损失 ↑"}),6*r,padT+10*r);
+  x.textAlign="center";x.fillText(tx({en:"compute · data · parameters →",zh:"算力 · 数据 · 参数 →"}),W/2,H-10*r);
+  const cap = v<et? (lang==='en'?"predictable, smooth gains":"可预测的平滑增益") : (lang==='en'?"new abilities emerge":"新能力开始涌现");
+  document.getElementById('scale-read').innerHTML=`<b>${(v*100).toFixed(0)}%</b> · ${cap}`;
+}
+
+/* PART 3 */
+function renderTriad(){document.getElementById('triad').innerHTML=TRIAD.map(t=>`<div class="tcard"><div class="vs"><span class="a s">${tx(t.s)}</span><span class="x">vs</span><span class="a f">${tx(t.f)}</span></div><p>${tx(t.p)}</p></div>`).join('');}
+
+/* PART 4 */
+function renderLadder(){document.getElementById('ladder').innerHTML=LADDER.map(r=>`<div class="rung"><div class="rl"><span class="dn">${r.dn}</span> ${tx(r.l)}</div><div class="rd">${tx(r.d)}</div><div><div class="rbar"><div class="rf" style="width:${r.pct}%"></div></div><div class="rpct">${r.pct}% ${tx({en:"signal",zh:"信号"})}</div></div></div>`).join('');}
+
+/* PART 5 */
+function renderTrees(){
+  document.getElementById('fp-tree').innerHTML=FP_TREE[lang].map(n=>`<div class="tnode">${n}</div>`).join('');
+  document.getElementById('st-tree').innerHTML=ST_TREE[lang].map(n=>`<div class="tnode">${n}</div>`).join('');
+}
+
+/* PART 6 causal */
+let causalMode='obs';
+function setCausal(m){causalMode=m;
+  document.getElementById('mode-obs').classList.toggle('active',m==='obs');
+  document.getElementById('mode-int').classList.toggle('active',m==='int');
+  const d=m==='obs'?CAUSAL.obs:CAUSAL.int;
+  document.getElementById('causal-h').innerHTML=tx(d.h);
+  document.getElementById('causal-p').innerHTML=tx(d.p);
+  drawCausal();
+}
+function drawCausal(){
+  const cv=document.getElementById('causal-canvas');if(!cv)return;
+  const r=devicePixelRatio||1;const S=cv.width=cv.offsetWidth*r;cv.height=S;const x=cv.getContext('2d');
+  x.clearRect(0,0,S,S);
+  const N={};CAUSAL.nodes.forEach(n=>N[n.id]=[n.x*S,n.y*S]);
+  const intervened=causalMode==='int';
+  CAUSAL.edges.forEach(([a,b])=>{
+    // when intervening on sprinkler, cut incoming arrows to it (none here) — but visually mute rain->wet contribution? Keep all; highlight active
+    const cut = intervened && a==='rain' && b==='wet'; // rain no longer the explanation; sprinkler forced
+    const[ax,ay]=N[a],[bx,by]=N[b];const dx=bx-ax,dy=by-ay,L=Math.hypot(dx,dy),ux=dx/L,uy=dy/L;
+    const sx=ax+ux*26*r,sy=ay+uy*26*r,ex=bx-ux*26*r,ey=by-uy*26*r;
+    x.strokeStyle=cut?"rgba(120,130,150,.22)":(intervened&&a==='spr'?"#e3aa46":"rgba(116,200,255,.6)");
+    x.lineWidth=(intervened&&a==='spr'?3:2)*r;if(cut)x.setLineDash([3*r,4*r]);
+    x.beginPath();x.moveTo(sx,sy);x.lineTo(ex,ey);x.stroke();x.setLineDash([]);
+    // arrowhead
+    x.fillStyle=cut?"rgba(120,130,150,.22)":(intervened&&a==='spr'?"#e3aa46":"rgba(116,200,255,.6)");
+    x.beginPath();x.moveTo(ex,ey);x.lineTo(ex-ux*10*r-uy*5*r,ey-uy*10*r+ux*5*r);x.lineTo(ex-ux*10*r+uy*5*r,ey-uy*10*r-ux*5*r);x.closePath();x.fill();
+  });
+  CAUSAL.nodes.forEach(n=>{const[px,py]=N[n.id];
+    const forced=intervened&&n.id==='spr';
+    x.beginPath();x.arc(px,py,24*r,0,7);
+    x.fillStyle=forced?"rgba(227,170,70,.22)":"rgba(77,159,255,.14)";x.fill();
+    x.strokeStyle=forced?"#e3aa46":"#4d9fff";x.lineWidth=2*r;
+    if(forced){x.setLineDash([2*r,3*r]);}x.stroke();x.setLineDash([]);
+    x.fillStyle="#e7ecf6";x.font=`${10.5*r}px "JetBrains Mono", monospace`;x.textAlign="center";x.textBaseline="middle";
+    x.fillText(tx(n.l),px,py);
+    if(forced){x.fillStyle="#e3aa46";x.font=`${9*r}px "JetBrains Mono", monospace`;x.fillText("do()",px,py+16*r);}
+  });
+}
+
+/* PART 7 */
+function wmGlyph(k){
+  const c={lm:"#4d9fff",pm:"#54d6a8",am:"#9d8cff"}[k];
+  const s=`stroke="${c}" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"`;
+  const g={lm:`<path d="M8 12h32M8 21h26M8 30h32M8 39h20" ${s}/>`,
+    pm:`<circle cx="24" cy="24" r="6" ${s}/><ellipse cx="24" cy="24" rx="18" ry="7" ${s}/><ellipse cx="24" cy="24" rx="18" ry="7" ${s} transform="rotate(60 24 24)"/>`,
+    am:`<circle cx="24" cy="14" r="5" ${s}/><path d="M24 19v14M24 33l-9 9M24 33l9 9M14 26h20" ${s}/>`};
+  return `<svg class="ic" viewBox="0 0 48 48">${g[k]}</svg>`;
+}
+function renderWM(){document.getElementById('wm').innerHTML=WM.map(w=>`<div class="wmcard ${w.cls}">${wmGlyph(w.ic)}<h3>${tx(w.h)}</h3><div class="ws">${tx(w.s)}</div><p>${tx(w.p)}</p></div>`).join('');}
+
+/* PART 8 */
+function renderViews(){
+  document.getElementById('view-a').innerHTML=VIEWA[lang].map(l=>`<li>${l}</li>`).join('');
+  document.getElementById('view-b').innerHTML=VIEWB[lang].map(l=>`<li>${l}</li>`).join('');
+}
+
+/* PART 9 */
+function renderArch(){document.getElementById('arch-grid').innerHTML=ARCH.map(a=>`<div class="arch"><div class="an">${a.n}</div><h4>${tx(a.h)}</h4><p>${tx(a.p)}</p></div>`).join('');}
+
+/* PART 10 intelligence map */
+let imapSel=0;
+function drawIMap(){
+  const cv=document.getElementById('imap-canvas');if(!cv)return;
+  const r=devicePixelRatio||1;const S=cv.width=cv.offsetWidth*r;cv.height=S;const x=cv.getContext('2d');
+  const cx=S/2,cy=S/2,R=S*0.36,n=IMAP.length;x.clearRect(0,0,S,S);
+  // spokes
+  IMAP.forEach((f,i)=>{const a=-Math.PI/2+i/n*2*Math.PI;
+    x.strokeStyle="rgba(220,228,245,.07)";x.lineWidth=r;x.beginPath();x.moveTo(cx,cy);x.lineTo(cx+Math.cos(a)*R,cy+Math.sin(a)*R);x.stroke();});
+  // center
+  x.beginPath();x.arc(cx,cy,15*r,0,7);x.fillStyle="rgba(157,140,255,.18)";x.fill();x.strokeStyle="#9d8cff";x.lineWidth=1.5*r;x.stroke();
+  IMAP.forEach((f,i)=>{const a=-Math.PI/2+i/n*2*Math.PI;const nx=cx+Math.cos(a)*R,ny=cy+Math.sin(a)*R;
+    const col=f.lean==='stat'?"#4d9fff":f.lean==='fp'?"#e3aa46":"#9d8cff";
+    const sel=i===imapSel;
+    x.beginPath();x.arc(nx,ny,(sel?13:9)*r,0,7);
+    x.fillStyle=sel?col:col+'33';x.fill();x.strokeStyle=col;x.lineWidth=(sel?2.4:1.4)*r;x.stroke();
+    // label
+    x.fillStyle=sel?"#fff":"rgba(200,208,224,.75)";x.font=`${sel?11:10}px "JetBrains Mono", monospace`;x.save();x.scale(r,r);
+    const lx=(cx+Math.cos(a)*(R+20*r))/r,ly=(cy+Math.sin(a)*(R+20*r))/r;
+    x.textAlign=Math.abs(Math.cos(a))<.35?'center':(Math.cos(a)>0?'left':'right');x.textBaseline="middle";
+    x.fillText(tx(f.l),lx,ly);x.restore();
+  });
+  // store positions for hit testing
+  cv._hit=IMAP.map((f,i)=>{const a=-Math.PI/2+i/n*2*Math.PI;return[cx+Math.cos(a)*R,cy+Math.sin(a)*R];});
+}
+function renderIMapDetail(){
+  const f=IMAP[imapSel];const col=f.lean==='stat'?"var(--stat)":f.lean==='fp'?"var(--fp)":"var(--synth)";
+  const leanTxt=f.lean==='stat'?{en:"leans · statistical",zh:"偏向 · 统计"}:f.lean==='fp'?{en:"leans · first-principles",zh:"偏向 · 第一性原理"}:{en:"contested ground",zh:"争议地带"};
+  document.getElementById('imap-detail').innerHTML=`<div class="id-tag" style="color:${col}">${tx({en:"facet of intelligence",zh:"智能的侧面"})}</div><h3>${tx(f.l)}</h3><p>${tx(f.d)}</p><span class="lean" style="color:${col};border:1px solid ${col};background:${col}1a">${tx(leanTxt)}</span>`;
+}
+function setupIMap(){
+  const cv=document.getElementById('imap-canvas');
+  cv.onclick=(e)=>{const rect=cv.getBoundingClientRect();const r=devicePixelRatio||1;const mx=(e.clientX-rect.left)*r,my=(e.clientY-rect.top)*r;
+    if(!cv._hit)return;let best=0,bd=1e9;cv._hit.forEach((p,i)=>{const d=Math.hypot(p[0]-mx,p[1]-my);if(d<bd){bd=d;best=i;}});
+    if(bd<40*r){imapSel=best;drawIMap();renderIMapDetail();}};
+}
+
+/* SPECIAL */
+function renderSG(){document.getElementById('sg-tokens').innerHTML=SGTOK.map(t=>`<span class="symtok">${t}</span>`).join('');}
+
+/* DEBATE */
+let dbTopic=0,dbRound=0;
+function renderTopics(){
+  const rail=document.getElementById('topic-rail');
+  rail.innerHTML=DEBATE.map((d,i)=>`<div class="topic ${i===dbTopic?'active':''}" data-i="${i}">${tx(d.topic)}</div>`).join('');
+  rail.querySelectorAll('.topic').forEach(x=>x.onclick=()=>{dbTopic=+x.dataset.i;dbRound=0;renderDebate();});
+}
+function renderDebate(){
+  renderTopics();
+  const d=DEBATE[dbTopic];
+  document.getElementById('debate-q').textContent=tx(d.q);
+  const vol=document.getElementById('volley');
+  let html='';
+  for(let i=0;i<=dbRound&&i<d.rounds.length;i++){
+    const rnd=d.rounds[i];
+    html+=`<div class="turn stat in"><div class="av">S</div><div class="bubble"><span class="nm">${tx({en:"Statistical",zh:"统计派"})}</span>${tx(rnd.s)}</div></div>`;
+    html+=`<div class="turn fp in"><div class="av">F</div><div class="bubble"><span class="nm">${tx({en:"First-Principles",zh:"第一性原理派"})}</span>${tx(rnd.f)}</div></div>`;
+  }
+  vol.innerHTML=html;
+  const total=d.rounds.length;
+  document.getElementById('db-read').innerHTML=`${tx({en:"round",zh:"回合"})} <b>${Math.min(dbRound+1,total)}</b> / ${total}`;
+  document.getElementById('db-next').style.opacity=dbRound>=total-1?.4:1;
+}
+function setupDebate(){
+  document.getElementById('db-next').onclick=()=>{const d=DEBATE[dbTopic];if(dbRound<d.rounds.length-1){dbRound++;renderDebate();}};
+}
+
+function renderAll(){
+  renderStatic();renderPipe();renderScaleMeta();drawScale();renderTriad();renderLadder();renderTrees();
+  setCausal(causalMode);renderWM();renderViews();renderArch();drawIMap();renderIMapDetail();renderSG();renderDebate();
+}
+
+/* lang toggle */
+document.getElementById('langtog').onclick=()=>{
+  lang=lang==='en'?'zh':'en';document.body.className='lang-'+lang;
+  document.documentElement.lang=lang==='en'?'en':'zh-CN';
+  document.getElementById('langtog').textContent=lang==='en'?'中文':'EN';
+  renderAll();
+};
+
+/* scaling slider */
+document.getElementById('scale-slider').addEventListener('input',drawScale);
+document.getElementById('mode-obs').onclick=()=>setCausal('obs');
+document.getElementById('mode-int').onclick=()=>setCausal('int');
+
+/* ===== HERO probability field canvas ===== */
+(function(){
+  const cv=document.getElementById('field'),x=cv.getContext('2d');let W,H,toks,parts;
+  const GLYPHS=["the","cat","∑","P(x)","0","1","∇","sat","gravity","is","→","mass","why","apple","E","mc²","token","loss","∂","λ"];
+  function rs(){const r=devicePixelRatio||1;W=cv.width=innerWidth*r;H=cv.height=cv.offsetHeight*r;}
+  function init(){const r=devicePixelRatio||1;parts=[];const n=Math.min(60,Math.floor(W*H/30000));
+    for(let i=0;i<n;i++)parts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.12*r,vy:(Math.random()-.5)*.12*r,g:GLYPHS[i%GLYPHS.length],o:Math.random()*.4+.15,s:(Math.random()*5+9)*r});}
+  rs();init();addEventListener('resize',()=>{rs();init();});
+  const LINK=150*(devicePixelRatio||1);
+  function frame(){x.clearRect(0,0,W,H);
+    // links
+    for(let i=0;i<parts.length;i++)for(let j=i+1;j<parts.length;j++){const a=parts[i],b=parts[j],d=Math.hypot(a.x-b.x,a.y-b.y);
+      if(d<LINK){x.strokeStyle=`rgba(77,159,255,${(1-d/LINK)*.12})`;x.lineWidth=(devicePixelRatio||1)*.5;x.beginPath();x.moveTo(a.x,a.y);x.lineTo(b.x,b.y);x.stroke();}}
+    parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
+      x.font=`${p.s}px "JetBrains Mono", monospace`;x.fillStyle=`rgba(116,200,255,${p.o})`;x.textAlign="center";x.fillText(p.g,p.x,p.y);});
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+
+/* offset nav below injected Psyverse bar */
+function offsetForBar(){const bar=document.getElementById('ψ-bar')||document.querySelector('[aria-label="Psyverse"]');const nav=document.getElementById('nav');const h=bar?Math.round(bar.getBoundingClientRect().height):0;nav.style.top=h+'px';document.documentElement.style.scrollPaddingTop=(h+68)+'px';}
+[300,900,1800].forEach(d=>setTimeout(offsetForBar,d));addEventListener('resize',offsetForBar);
+
+/* nav scroll + reveal + resize redraw */
+addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',scrollY>40);});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+addEventListener('resize',()=>{drawScale();drawCausal();drawIMap();if(pipeA===3)drawAttn();});
+
+setupIMap();setupDebate();renderAll();
+</script>
+</body>
+</html>
